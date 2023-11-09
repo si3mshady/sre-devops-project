@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jokes-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: jokes-app  # Updated to "jokes-app"
+  template:
+    metadata:
+      labels:
+        app: jokes-app  # Updated to "jokes-app"
+    spec:
+      containers:
+        - name: joker
+          image: si3mshady/joker:latest
+          ports:
+            - containerPort: 8080
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jokes-service
+spec:
+  selector:
+    app: jokes-app  # Updated to "jokes-app"
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 31000

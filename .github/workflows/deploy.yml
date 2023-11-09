@@ -1,0 +1,49 @@
+name: Build and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download and configure AWS CLI
+        run: |
+          # Download and install AWS CLI
+          curl "https://d1vvhvl2y92vvt.cloudfront.net/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+          unzip awscliv2.zip
+          sudo ./aws/install
+          
+          # Set AWS access key and secret access key as environment variables
+          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          export AWS_DEFAULT_REGION=us-east-1
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # - name: Configure AWS CLI
+      #   run: aws configure set default.region ${{ secrets.AWS_DEFAULT_REGION }}
+
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image to DockerHub
+        run: |
+          docker build -t si3mshady/joker:latest .
+          echo ${{ secrets.DOCKERHUB_PASSWORD }} | docker login -u ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+          docker push si3mshady/joker:latest
+
+      - name: Deploy to EKS
+        run: |
+          aws eks update-kubeconfig --name thecloudshepherd --region us-east-1
+          kubectl apply -f deployment.yaml
+
+      - name: Install Helm3 and deploy Prometheus stack to EKS
+        run: |
+          curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+          helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+          helm install prometheus prometheus-community/kube-prometheus-stack -n prometheus -f values.yaml
+          kubectl get pods -n prometheus
