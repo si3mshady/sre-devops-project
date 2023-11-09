@@ -26,6 +26,7 @@ metadata:
 spec:
   selector:
     app: jokes-app  # Updated to "jokes-app"
+  type: NodePort
   ports:
     - protocol: TCP
       port: 8080
