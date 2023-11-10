@@ -39,36 +39,36 @@ spec:
       targetPort: 8080
       nodePort: 31000
 ---
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: jokes-ingress
-  namespace: ingress-nginx
-  annotations:
-    kubernetes.io/ingress.class: "nginx" # Use the appropriate Ingress controller class
-spec:
-  rules:
-    - host: youtube.sreuniversity.org
-      http:
-        paths:
-          - path: /green
-            pathType: Prefix
-            backend:
-              service:
-                name: jokes-service
-                port:
-                  number: 8080
-          - path: /red
-            pathType: Prefix
-            backend:
-              service:
-                name: jokes-service
-                port:
-                  number: 8080
-          - path: /yellow
-            pathType: Prefix
-            backend:
-              service:
-                name: jokes-service
-                port:
-                  number: 8080
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: jokes-ingress
+#   namespace: ingress-nginx
+#   annotations:
+#     kubernetes.io/ingress.class: "nginx" # Use the appropriate Ingress controller class
+# spec:
+#   rules:
+#     - host: youtube.sreuniversity.org
+#       http:
+#         paths:
+#           - path: /green
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: jokes-service
+#                 port:
+#                   number: 8080
+#           - path: /red
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: jokes-service
+#                 port:
+#                   number: 8080
+#           - path: /yellow
+#             pathType: Prefix
+#             backend:
+#               service:
+#                 name: jokes-service
+#                 port:
+#                   number: 8080
