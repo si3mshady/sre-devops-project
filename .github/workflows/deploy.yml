@@ -59,8 +59,6 @@ jobs:
 
 
 
-
-
 # # \\\The script is performing the following actions:
 # Adding the nginx-stable repository to Helm using the command helm repo add nginx-stable https://helm.nginx.com/stable.
 # Updating the Helm repositories using the command helm repo update.
