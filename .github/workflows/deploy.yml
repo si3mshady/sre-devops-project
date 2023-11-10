@@ -63,7 +63,7 @@ jobs:
 #              --namespace ingress-nginx --create-namespace
 
 # kubectl get pods -n ingress-nginx
-kubectl get svc -n ingress-nginx
+# kubectl get svc -n ingress-nginx
 
 
 # # \\\The script is performing the following actions:
