@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 8080;
+const port = 80;
 
 const jokes = {
   green: "Why was the math book sad? Because it had too many problems!",

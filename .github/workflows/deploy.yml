@@ -1,0 +1,50 @@
+name: Build and Deploy to EKS
+
+on:
+  push:
+    branches:
+      - main
+
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build and push Docker image to DockerHub
+        run: |
+          docker build -t si3mshady/joker:latest .
+          echo ${{ secrets.DOCKER_PASSWORD }} | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
+          docker push si3mshady/joker:latest
+
+      - name: Update Kube Config
+        run: |
+          export AWS_ACCESS_KEY_ID=${{ secrets.AWS_ACCESS_KEY_ID }}
+          export AWS_SECRET_ACCESS_KEY=${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          export AWS_DEFAULT_REGION=us-east-1
+          aws eks update-kubeconfig --name thecloudshepherd --region us-east-1
+
+      - name: Deploy to EKS
+        run: |
+          kubectl apply -f deployment.yaml
+
+      # - name: Install Helm3 and deploy Prometheus stack to EKS
+      #   run: |
+      #     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+      #     helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+      #     helm install prometheus prometheus-community/kube-prometheus-stack -n ingress-nginx -f values.yaml
+      #     kubectl get pods -n ingress-nginx
+
+
+
+# Add HELM Repository
+# helm repo add nginx-stable https://helm.nginx.com/stable
+# helm repo update
+
+# helm upgrade --install ingress-nginx ingress-nginx \
+#              --repo https://kubernetes.github.io/ingress-nginx \
+#              --namespace ingress-nginx --create-namespace
+
+# kubectl get pods -n ingress-nginx
