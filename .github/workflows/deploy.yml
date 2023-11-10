@@ -38,6 +38,13 @@ jobs:
       #     kubectl get pods -n ingress-nginx
 
 
+# youtube
+
+# clean slate:
+# # helm uninstall ingress-nginx --namespace ingress-nginx
+# # helm repo remove nginx-stable
+
+
 
 # Add HELM Repository
 # helm repo add nginx-stable https://helm.nginx.com/stable
@@ -48,3 +55,15 @@ jobs:
 #              --namespace ingress-nginx --create-namespace
 
 # kubectl get pods -n ingress-nginx
+
+
+
+
+
+# # \\\The script is performing the following actions:
+# Adding the nginx-stable repository to Helm using the command helm repo add nginx-stable https://helm.nginx.com/stable.
+# Updating the Helm repositories using the command helm repo update.
+# Installing or upgrading the ingress-nginx release using the command helm upgrade --install ingress-nginx ingress-nginx --repo https://kubernetes.github.io/ingress-nginx --namespace ingress-nginx --create-namespace.
+# Checking the status of the pods in the ingress-nginx namespace using the command kubectl get pods -n ingress-nginx.
+# The first two commands add the nginx-stable repository to Helm and update the list of available charts. The third command installs or upgrades the ingress-nginx release using the ingress-nginx chart from the https://kubernetes.github.io/ingress-nginx repository. The --create-namespace flag creates the ingress-nginx namespace if it does not already exist. The fourth command checks the status of the pods in the ingress-nginx namespace to ensure that the ingress-nginx release has been deployed successfully.
+# The NGINX Ingress Controller is a popular Kubernetes Ingress controller that uses NGINX as a reverse proxy and load balancer. The helm upgrade command is used to install or upgrade the NGINX Ingress Controller using the ingress-nginx chart. The kubectl get pods command is used to check the status of the pods in the ingress-nginx namespace to ensure that the NGINX Ingress Controller has been deployed successfully.
