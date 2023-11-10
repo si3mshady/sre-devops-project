@@ -41,15 +41,16 @@ jobs:
 
 # youtube
 
-# first step is to deploy ingress controller (helm)
-# second step is deploy and and service
+# first step is to deploy ingress controller (helm) kubectl get svc -n ingress-nginx
+# second step is deploy and and service kubectl get svc -n ingress-nginx
 # update r53 create alias record to IC
 # create ingress
 
 
 # clean slate:
-# # helm uninstall ingress-nginx --namespace ingress-nginx
-# # helm repo remove nginx-stable
+# helm uninstall ingress-nginx --namespace ingress-nginx
+# helm repo remove nginx-stable
+# kubectl delete -f deployment.yaml 
 
 
 
