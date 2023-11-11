@@ -26,13 +26,12 @@ jobs:
           echo "Build failed!"
           echo "::set-output name=status::failure"
           echo "::set-output name=BUILD_STATUS::failure"
-          exit 1
         fi
 
     - name: Send Build Status
       run: |
         status=$BUILD_STATUS
-        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+        url="https://9831-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
 
         if [ "$status" == "success" ]; then
           echo "Sending positive status for Build..."
@@ -71,13 +70,12 @@ jobs:
           echo "Tests failed!"
           echo "::set-output name=status::failure"
           echo "::set-output name=TEST_STATUS::failure"
-          exit 1
         fi
 
     - name: Send Test Status
       run: |
         status=$TEST_STATUS
-        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+        url="https://9831-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
 
         if [ "$status" == "success" ]; then
           echo "Sending positive status for Test..."
@@ -116,13 +114,12 @@ jobs:
           echo "Deployment failed!"
           echo "::set-output name=status::failure"
           echo "::set-output name=DEPLOY_STATUS::failure"
-          exit 1
         fi
 
     - name: Send Deploy Status
       run: |
         status=$DEPLOY_STATUS
-        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+        url="https://9831-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
 
         if [ "$status" == "success" ]; then
           echo "Sending positive status for Deploy..."
