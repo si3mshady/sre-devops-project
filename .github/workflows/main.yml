@@ -32,7 +32,7 @@ jobs:
     - name: Send Build Status
       run: |
         status=$BUILD_STATUS
-        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+        url="https://9831-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
 
         if [ "$status" == "success" ]; then
           echo "Sending positive status for Build..."
@@ -77,7 +77,7 @@ jobs:
     - name: Send Test Status
       run: |
         status=$TEST_STATUS
-        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+        url="https://9831-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
 
         if [ "$status" == "success" ]; then
           echo "Sending positive status for Test..."
@@ -122,7 +122,7 @@ jobs:
     - name: Send Deploy Status
       run: |
         status=$DEPLOY_STATUS
-        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+        url="https://9831-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
 
         if [ "$status" == "success" ]; then
           echo "Sending positive status for Deploy..."
@@ -147,3 +147,5 @@ jobs:
             }
           }" "$url"
         fi
+
+
