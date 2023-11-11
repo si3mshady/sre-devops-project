@@ -1,0 +1,149 @@
+name: Simulate Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  simulate_pipeline:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Build
+      id: build
+      run: |
+        echo "Building..."
+        # Simulate a build process
+        if [ $((RANDOM % 2)) -eq 0 ]; then
+          echo "Build successful!"
+          echo "::set-output name=status::success"
+          echo "::set-output name=BUILD_STATUS::success"
+        else
+          echo "Build failed!"
+          echo "::set-output name=status::failure"
+          echo "::set-output name=BUILD_STATUS::failure"
+          exit 1
+        fi
+
+    - name: Send Build Status
+      run: |
+        status=$BUILD_STATUS
+        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+
+        if [ "$status" == "success" ]; then
+          echo "Sending positive status for Build..."
+          curl -X POST -d "{
+            \"check\": {
+              \"metadata\": {
+                \"name\": \"check-github-action-status-build\"
+              },
+              \"status\": 0,
+              \"output\": \"Build successful\"
+            }
+          }" "$url"
+        else
+          echo "Sending negative status for Build..."
+          curl -X POST -d "{
+            \"check\": {
+              \"metadata\": {
+                \"name\": \"check-github-action-status-build\"
+              },
+              \"status\": 1,
+              \"output\": \"Build failed\"
+            }
+          }" "$url"
+        fi
+
+    - name: Test
+      id: test
+      run: |
+        echo "Testing..."
+        # Simulate a test process
+        if [ $((RANDOM % 2)) -eq 0 ]; then
+          echo "Tests passed!"
+          echo "::set-output name=status::success"
+          echo "::set-output name=TEST_STATUS::success"
+        else
+          echo "Tests failed!"
+          echo "::set-output name=status::failure"
+          echo "::set-output name=TEST_STATUS::failure"
+          exit 1
+        fi
+
+    - name: Send Test Status
+      run: |
+        status=$TEST_STATUS
+        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+
+        if [ "$status" == "success" ]; then
+          echo "Sending positive status for Test..."
+          curl -X POST -d "{
+            \"check\": {
+              \"metadata\": {
+                \"name\": \"check-github-action-status-test\"
+              },
+              \"status\": 0,
+              \"output\": \"Tests passed\"
+            }
+          }" "$url"
+        else
+          echo "Sending negative status for Test..."
+          curl -X POST -d "{
+            \"check\": {
+              \"metadata\": {
+                \"name\": \"check-github-action-status-test\"
+              },
+              \"status\": 1,
+              \"output\": \"Tests failed\"
+            }
+          }" "$url"
+        fi
+
+    - name: Deploy
+      id: deploy
+      run: |
+        echo "Deploying..."
+        # Simulate a deploy process
+        if [ $((RANDOM % 2)) -eq 0 ]; then
+          echo "Deployment successful!"
+          echo "::set-output name=status::success"
+          echo "::set-output name=DEPLOY_STATUS::success"
+        else
+          echo "Deployment failed!"
+          echo "::set-output name=status::failure"
+          echo "::set-output name=DEPLOY_STATUS::failure"
+          exit 1
+        fi
+
+    - name: Send Deploy Status
+      run: |
+        status=$DEPLOY_STATUS
+        url="https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io"  # Replace with your Ngrok URL
+
+        if [ "$status" == "success" ]; then
+          echo "Sending positive status for Deploy..."
+          curl -X POST -d "{
+            \"check\": {
+              \"metadata\": {
+                \"name\": \"check-github-action-status-deploy\"
+              },
+              \"status\": 0,
+              \"output\": \"Deployment successful\"
+            }
+          }" "$url"
+        else
+          echo "Sending negative status for Deploy..."
+          curl -X POST -d "{
+            \"check\": {
+              \"metadata\": {
+                \"name\": \"check-github-action-status-deploy\"
+              },
+              \"status\": 1,
+              \"output\": \"Deployment failed\"
+            }
+          }" "$url"
+        fi
