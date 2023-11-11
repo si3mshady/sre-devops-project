@@ -21,9 +21,11 @@ jobs:
         if [ $((RANDOM % 2)) -eq 0 ]; then
           echo "Build successful!"
           echo "::set-output name=status::success"
+          echo "::set-output name=BUILD_STATUS::success"
         else
           echo "Build failed!"
           echo "::set-output name=status::failure"
+          echo "::set-output name=BUILD_STATUS::failure"
           exit 1
         fi
 
@@ -64,9 +66,11 @@ jobs:
         if [ $((RANDOM % 2)) -eq 0 ]; then
           echo "Tests passed!"
           echo "::set-output name=status::success"
+          echo "::set-output name=TEST_STATUS::success"
         else
           echo "Tests failed!"
           echo "::set-output name=status::failure"
+          echo "::set-output name=TEST_STATUS::failure"
           exit 1
         fi
 
@@ -107,9 +111,11 @@ jobs:
         if [ $((RANDOM % 2)) -eq 0 ]; then
           echo "Deployment successful!"
           echo "::set-output name=status::success"
+          echo "::set-output name=DEPLOY_STATUS::success"
         else
           echo "Deployment failed!"
           echo "::set-output name=status::failure"
+          echo "::set-output name=DEPLOY_STATUS::failure"
           exit 1
         fi
 
@@ -141,4 +147,3 @@ jobs:
             }
           }" "$url"
         fi
-
