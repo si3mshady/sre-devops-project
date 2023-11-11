@@ -1,0 +1,34 @@
+version: "3"
+services:
+  sensu-backend:
+    ports:
+    - 3000:3000
+    - 8080:8080
+    - 8081:8081
+    volumes:
+    - "sensu-backend-data:/var/lib/sensu/sensu-backend/etcd"
+    command: "sensu-backend start --state-dir /var/lib/sensu/sensu-backend --log-level debug"
+    environment:
+    - SENSU_BACKEND_CLUSTER_ADMIN_USERNAME=thecloudshepherd
+    - SENSU_BACKEND_CLUSTER_ADMIN_PASSWORD=thecloudshepherd
+    image: sensu/sensu:latest
+
+#send event to agent 
+  sensu-agent:
+    image: sensu/sensu:latest
+    ports:
+    - 3031:3031
+    volumes:
+    - "sensu-agent-data:/var/lib/sensu"
+    command: "sensu-agent start --backend-url ws://sensu-backend:8081 --log-level debug --subscriptions system --api-host 0.0.0.0 --cache-dir /var/lib/sensu"
+
+
+volumes:
+  sensu-backend-data:
+    driver: local
+  sensu-agent-data:
+    driver: local
+
+# https://docs.sensu.io/sensu-go/latest/operations/deploy-sensu/install-sensu/
+# ngrok http 3031
+# https://0d83-2603-8080-6300-b84-bd0d-90fe-4799-511c.ngrok.io -> http://localhost:3031               
